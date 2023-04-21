@@ -614,7 +614,7 @@ if __name__ == '__main__':
             exit()
         ## provided data
         elif args.data != None:
-            dm = DeepMicrobiome(data=args.data + '.txt', seed=seed, data_dir=args.data_dir)
+            dm = DeepMicrobiome(data=args.data + '.tsv', seed=seed, data_dir=args.data_dir)
 
             ## specify feature string
             feature_string = ''
