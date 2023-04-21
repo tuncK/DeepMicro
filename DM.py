@@ -61,7 +61,7 @@ class DeepMicrobiome(object):
             exit()
 
         # select rows having feature index identifier string
-        X = raw.loc[raw.index.str.contains(feature_string, regex=False)].T
+        X = raw.loc[raw.index.str.contains(feature_string, regex=True)].T
 
         # get class labels
         Y = raw.loc[label_string] #'disease'
@@ -494,6 +494,8 @@ if __name__ == '__main__':
                                  "abundance_Obesity", "abundance_T2D", "abundance_WT2D",
                                  "marker_Cirrhosis", "marker_Colorectal", "marker_IBD",
                                  "marker_Obesity", "marker_T2D", "marker_WT2D",
+                                 "combined_Cirrhosis", "combined_Colorectal", "combined_IBD",
+                                 "combined_Obesity", "combined_T2D", "combined_WT2D",
                                  ])
     load_data.add_argument("-cd", "--custom_data", help="filename for custom input data under the 'data' folder", type=str,)
     load_data.add_argument("-cl", "--custom_data_labels", help="filename for custom input labels under the 'data' folder", type=str,)
@@ -622,7 +624,9 @@ if __name__ == '__main__':
             if data_string.split('_')[0] == 'abundance':
                 feature_string = "k__"
             if data_string.split('_')[0] == 'marker':
-                feature_string = "gi|"
+                feature_string = "gi\|"
+            if data_string.split('_')[0] == 'combined':
+                feature_string = "(k__)|(gi\|)"
 
             ## load data into the object
             dm.loadData(feature_string=feature_string, label_string='disease', label_dict=label_dict,
